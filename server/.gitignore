@@ -3,4 +3,9 @@ node_modules
 uploads/*
 !uploads/*.svg
 
+# database
 *.sqlite
+
+# logs
+yarn-debug.log*
+yarn-error.log*
