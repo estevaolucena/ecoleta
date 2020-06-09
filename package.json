@@ -1,0 +1,22 @@
+{
+  "name": "ecoleta",
+  "version": "1.0.0",
+  "description": "Your marketplace for collect recycle waste.",
+  "main": "index.js",
+  "repository": "git@github.com:estevaolucena/ecoleta.git",
+  "author": "Estevao Lucena <estevao.llucena@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "server",
+    "web",
+    "mobile"
+  ],
+  "scripts": {
+    "knex:migrate": "cd server && yarn knex:migrate",
+    "knex:seed": "cd server && yarn knex:seed",
+    "start:server": "cd server && yarn start:dev",
+    "start:web": "cd web && yarn start:dev",
+    "start:mobile": "cd mobile && yarn start:dev"
+  }
+}
