@@ -23,11 +23,11 @@
   </a>
 </p>
 <p align="center">
-<a href="https://insomnia.rest/run/?label=Ecoleta&uri=https%3A%2F%2Fraw.githubusercontent.com%2FEstevaoLucena%2Fecoleta%2Fmaster%2Fbackend%2FInsomnia.json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
+<a href="https://insomnia.rest/run/?label=Ecoleta&uri=https%3A%2F%2Fraw.githubusercontent.com%2FEstevaoLucena%2Fecoleta%2Fmaster%2Fserver%2FInsomnia.json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
 </p>
 
 
-## :target: What's Next Level Week?
+## :dart: What's Next Level Week?
 
 NLW is a seasonal event where a complete application with backend, frontend and mobile is developed using tools such as NodeJS, ReactJS and React Native.
 The proposal is a week of a lot of code with complete immersion in these technologies.
