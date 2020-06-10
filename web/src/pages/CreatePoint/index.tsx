@@ -5,6 +5,10 @@ import { Map, TileLayer, Marker } from 'react-leaflet'
 import { LeafletMouseEvent } from 'leaflet'
 import { FiArrowLeft } from 'react-icons/fi'
 
+import Item from '../../models/Item'
+import Uf from '../../models/Uf'
+import City from '../../models/City'
+
 import Dropzone from '../../components/Dropzone'
 
 import api from '../../services/api'
@@ -14,19 +18,6 @@ import './styles.css'
 import logo from '../../assets/logo.svg'
 
 const IBGE_API = process.env.REACT_APP_IBGE_API
-interface Item {
-  id: number,
-  title: string,
-  image_url: string 
-}
-
-interface UF {
-  sigla: string
-}
-
-interface City {
-  nome: string
-}
 
 const CreatePoint = () => {
   const [items, setItems] = useState<Item[]>([])
@@ -63,7 +54,7 @@ const CreatePoint = () => {
   },[])
 
   useEffect(() => {
-    axios.get<UF[]>(`${IBGE_API}`).then(response => {
+    axios.get<Uf[]>(`${IBGE_API}`).then(response => {
       const ufInitials = response.data.map(uf => uf.sigla)
       setUfs(ufInitials)
     })
