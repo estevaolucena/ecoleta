@@ -6,18 +6,20 @@ import { LeafletMouseEvent } from 'leaflet'
 import { FiArrowLeft } from 'react-icons/fi'
 
 import Item from '../../models/Item'
-import Uf from '../../models/Uf'
-import City from '../../models/City'
 
 import Dropzone from '../../components/Dropzone'
 
-import api from '../../services/api'
+import ItemService from '../../services/ItemService'
+import AdressService from '../../services/AdressService'
+import PointService from '../../services/PointService'
 
 import './styles.css'
 
 import logo from '../../assets/logo.svg'
 
-const IBGE_API = process.env.REACT_APP_IBGE_API
+const itemService = ItemService()
+const adressService = AdressService()
+const pointService = PointService()
 
 const CreatePoint = () => {
   const [items, setItems] = useState<Item[]>([])
@@ -32,7 +34,7 @@ const CreatePoint = () => {
     whatsapp: ''
   })
 
-  const [selectedUf, setSelectedUf] = useState('0')
+  const [selectedUf, setSelectedUf] = useState<string>('')
   const [selectedCity, setSelectedCity] = useState('0')
   const [selectedItems, setSelectedItems] = useState<number[]>([])
   const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0, 0])
@@ -48,25 +50,29 @@ const CreatePoint = () => {
   }, [])
 
   useEffect(() => {
-    api.get('items').then(response => {
-      setItems(response.data)
-    })
+    async function getItems() {
+      const response = await itemService.get()
+      setItems(response)
+    }
+    getItems();
   },[])
 
   useEffect(() => {
-    axios.get<Uf[]>(`${IBGE_API}`).then(response => {
-      const ufInitials = response.data.map(uf => uf.sigla)
-      setUfs(ufInitials)
-    })
+    async function getUfInitials() {
+      const response = await adressService.getUfs()
+      setUfs(response)
+    }
+    getUfInitials()
   }, [])
 
   useEffect(() => {
-    if (selectedUf === '0') return
+    if (selectedUf === undefined) return
 
-    axios.get<City[]>(`${IBGE_API}${selectedUf}/municipios`).then(response => {
-      const cityNames = response.data.map(city => city.nome)
-      setCities(cityNames)
-    })
+    async function getCitieNames(selectedUf: string) {
+      const response = await adressService.getCities(selectedUf)
+      setCities(response)
+    }
+    getCitieNames(selectedUf)
   }, [selectedUf])
 
   function handleSelectUf(event: ChangeEvent<HTMLSelectElement>) {
@@ -126,7 +132,7 @@ const CreatePoint = () => {
       data.append('image', selectedFile)
     }
 
-    await api.post('points', data)
+    await pointService.create(data)
 
     alert('Ponto de coleta criado.')
 
