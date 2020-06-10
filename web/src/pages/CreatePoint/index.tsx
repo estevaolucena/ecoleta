@@ -1,18 +1,19 @@
 import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react'
+import axios from 'axios'
 import { Link, useHistory } from 'react-router-dom'
-import { FiArrowLeft } from 'react-icons/fi'
 import { Map, TileLayer, Marker } from 'react-leaflet'
 import { LeafletMouseEvent } from 'leaflet'
+import { FiArrowLeft } from 'react-icons/fi'
 
 import Dropzone from '../../components/Dropzone'
 
-import axios from 'axios'
 import api from '../../services/api'
 
 import './styles.css'
 
 import logo from '../../assets/logo.svg'
 
+const IBGE_API = process.env.REACT_APP_IBGE_API
 interface Item {
   id: number,
   title: string,
@@ -62,7 +63,7 @@ const CreatePoint = () => {
   },[])
 
   useEffect(() => {
-    axios.get<UF[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados').then(response => {
+    axios.get<UF[]>(`${IBGE_API}`).then(response => {
       const ufInitials = response.data.map(uf => uf.sigla)
       setUfs(ufInitials)
     })
@@ -71,7 +72,7 @@ const CreatePoint = () => {
   useEffect(() => {
     if (selectedUf === '0') return
 
-    axios.get<City[]>(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/municipios`).then(response => {
+    axios.get<City[]>(`${IBGE_API}${selectedUf}/municipios`).then(response => {
       const cityNames = response.data.map(city => city.nome)
       setCities(cityNames)
     })

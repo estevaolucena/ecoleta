@@ -1,8 +1,9 @@
 import axios from 'axios'
 
-// CONFIGURAR VARIÁVEIS DE AMBIENTE
+const SERVER_URL = process.env.REACT_APP_SERVER_URL
+
 const api = axios.create({
-  baseURL: 'http://localhost:3000/'
+  baseURL: SERVER_URL
 })
 
 export default api
